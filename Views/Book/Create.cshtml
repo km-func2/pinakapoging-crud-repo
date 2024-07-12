@@ -1,0 +1,50 @@
+@model BooksEntity
+
+@{
+    ViewData["Title"] = "Adding New Book";
+}
+
+<form asp-action="CreateBook" asp-controller="Book" method="post">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label>
+                    Book Title
+                </label>
+                <input required asp-for="Title" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>
+                    Book Author
+                </label>
+                <input required asp-for="Author" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>
+                    Book Genre
+                </label>
+                <input required asp-for="Genre" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>
+                    Book ISBN
+                </label>
+                <input required asp-for="ISBN" type="text" class="form-control" />
+            </div>
+             <div class="form-group">
+                <label>
+                    Date Published
+                </label>
+                <input required asp-for="DatePublished" type="date" class="form-control" />
+            </div>
+            <div class="card-footer">
+                <center>
+                    <button type="submit" class="btn btn-primary">Create Book</button>
+                    <a asp-action="Index" asp-controller="Book" class="btn btn-danger">Cancel</a>
+                </center>    
+            </div>
+            
+        </div>
+    </div>
+
+</form>
