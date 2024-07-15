@@ -10,5 +10,5 @@ public class ApplicationDbContext :DbContext
     }
 
     public DbSet<BooksEntity> Books {get; set;}
-
+    public DbSet<NewBooksEntity> NewBooks {get; set;}
 }

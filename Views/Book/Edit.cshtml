@@ -1,10 +1,12 @@
-@model BooksEntity
+@model BookFormModel;
+@* @model NewBooksEntity; *@
 
 @{
     ViewData["Title"] = "Editing a Book";
 }
+@* How exactly am I supposed to implement an initial value when I can't show the thingy? *@
 
-<form asp-action="EditBook" asp-controller="Book" method="post">
+<form asp-action="EditBook" asp-controller="Book" method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="col-lg-12">
             <input readonly asp-for="Id" type="hidden" value=@Model.Id />
@@ -44,6 +46,10 @@
                 </label>
                 <input required asp-for="DatePublished" type="date" class="form-control" 
                 value='@Model.DatePublished.ToString("yyyy-MM-dd")'/>
+            </div>
+            <div class="input-group mb-3">
+                <input asp-for="ImageFile" value="@Model.ImageFile" type="file">
+                <label class="input-group-text" for="inputGroupFile02">Upload</label>
             </div>
             <div> 
                     <button type="submit" class="btn btn-primary">Edit Book</button>
