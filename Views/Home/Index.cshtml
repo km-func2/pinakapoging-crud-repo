@@ -1,13 +1,56 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    .hero-banner{
+        
+        background-size: cover;
+        background-position: center;
+        background-image: url("https://images.unsplash.com/photo-1569878766010-17bff0a1987d?q=80&w=1365&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        object-fit: cover;
+    }
+    .central-logo{ 
+        border: 1.5rem white solid
+    }
+    .top-rounded{
+        border-radius: 1rem 1rem 0rem 0rem;
+        margin-bottom: -1px;
+    }
+     @@media only screen and (min-width: 992px){
+        .central-logo{
+            font-size: 100px;
+            border: 1rem white solid
+        }
+            .hero-banner{ 
+                min-height: 400px;
+                max-height: 500px;
+            }
+            
+        }
+    @@media only screen and (max-width: 991px){
+        .hero-banner{
+            min-height: 250px;
+        }
+        .central-logo{
+            font-size: 50px;
+            border: 1rem white solid
+        }
+    }
 
-<div class="text-center d-flex pt-5 mt-5 h-100 justify-content-center">
-    <div>
-        <h1 class="display-4">👻📖 BooKrud 📖👻 </h1>
-        <button type="button" class="btn btn-primary">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Index">Books</a>
-        </button>
+</style>
+<div>
+    <div class="hero-banner pt-5 d-flex justify-content-end align-items-center flex-column"  alt="picture of a wide library">
+        <p class="central-logo bg-dark mt-sm-5 p-1 rounded-circle">
+            📖
+        </p>
+        <div class="bg-dark d-flex flex-column text-center p-md-5 pb-4 p-3 top-rounded">
+            <h1>- BooKrud -</h1>
+            <h2>Online book database</h2>
+            <button type="button" class="btn btn-info mt-2">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Index">View Database</a>
+            </button>
     </div>
 </div>
+    
+</div> 
     

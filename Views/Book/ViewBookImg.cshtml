@@ -1,0 +1,28 @@
+@model NewBooksEntity;
+
+<style>
+    
+    img{
+        width: 100%;
+        height: auto;
+    }
+    @@media only screen and (min-width: 768px){
+        img{  
+            height: 600px;
+            width: fit-content;
+        }
+        
+    }
+</style>
+
+<div class="container py-4 d-flex flex-column  align-items-center gap-2">
+    <div class="d-flex gap-3 flex-column"> 
+        <a class="text-white text-right" asp-controller="Book" asp-route-id="@Model.Id" asp-action="ViewBook" class="text-white">
+            back
+        </a>
+        <h3>
+            Cover of @Model.Title by @Model.Author
+        </h3>
+    </div>
+    <img src="data:image/png;base64,@Model.BookCoverBase64" alt="Cover of @Model.Title" />
+</div>

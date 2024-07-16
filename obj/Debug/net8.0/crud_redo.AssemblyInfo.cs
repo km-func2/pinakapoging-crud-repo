@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("crud_redo")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+88b094f4116fc179b730238088545eff2831f2fa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+86d2fc1425daae80a412471737a19293585eec3f")]
 [assembly: System.Reflection.AssemblyProductAttribute("crud_redo")]
 [assembly: System.Reflection.AssemblyTitleAttribute("crud_redo")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

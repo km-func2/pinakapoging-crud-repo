@@ -4,35 +4,190 @@
     ViewData["Title"] = "Books";
 }
     <style>
-        img {
+        a{
+            text-decoration: none; 
+        }
+        .card-img-container{
+            position:relative;
+            min-height: 200px;
+        }
+            
+        .card-body{
+            max-height: 500px; 
+        }
+        .book-title{
+            display: flex;
+            width: fit-content;
+            position: absolute;
+            font-size: 1.5rem;
+            bottom: 0%; 
+        } 
+        .card-img-top {
             max-height: 200px;
-            max-width: 100%; /* Default style for small screens */
+            height: 300px;
+            object-fit: cover;
+        } 
+        .title-span{ 
+            color: gray;
+            width: 100px;
+            display: inline-block; 
         }
-        @@media only screen and (min-width: 992px){
-            img{ 
-                max-width: 120px;
-            }   
-        }
-        @@media only screen and (min-width: 600px) and (max-width: 991px){
-            img{ 
-                object-fit: cover;
-                max-width: 400px;
-            }   
-        }
+        .top-rounded{
+        border-radius: 1rem 1rem 0rem 0rem;
+    }
         
+        .book-banner { 
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            background-image: url("https://images.unsplash.com/photo-1569878766010-17bff0a1987d?q=80&w=1365&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+            object-fit: cover;
+        }
+        .title-container{
+            position: absolute;
+        
+        }
+            .page-title{ 
+                position: absolute;
+                bottom: -1px;
+                height: 48px;
+                display: flex;
+                flex-direction: column;
+                justify-content: end;
+                z-index: 9999;
+                box-shadow: 5px -10px 10px rgba(0, 0, 0, 0.205);
+            } 
+
+        .btn{
+            height: 48px;
+            @* width: fit-content; *@
+            position: absolute;
+            left: 190px;
+            bottom: -1px;
+            display: flex;
+            flex-direction: column;
+            justify-content: end
+        }
+        @@media only screen and (min-width: 768px){
+            .book-card{
+                width: 275px;
+            }
+            .card-img-top{
+                max-width: 275px;
+            }
+            img{ 
+                @* width: 180px; *@
+            }
+            .btn{
+                min-width: 200px;
+            }
+            .page-title{
+                width: 200px;
+            }
+            
+        }
+        @@media only screen and (min-width: 375px) and (max-width: 767px){
+            .card-img-top{
+                width: 100%;
+            }
+            img{ 
+                object-fit: cover; 
+            }
+            .btn{
+                width: 175px;;
+                left: 173px;
+                height: 50px;
+            }
+            .page-title{ 
+                width: 175px;
+                height: 50px;
+            }
+        }
+        @@media only screen and (max-width: 374px){
+            .card-img-top{
+                width: 100%;
+            }
+            img{ 
+                object-fit: cover; 
+            }   
+            .btn{
+                width: 150px;
+                left: 148px;
+                height: 50px;
+                padding-top: 5px;
+            }
+            .page-title{ 
+                width: 150px;
+                height: 50px;
+                padding-top: 5px;
+            }
+        }
     </style>
 
-    <div class="container pt-3 col-lg-8">
-        <div class="row mx-auto mb-3">
-            <div class="col px-0"><h2> books </h2></div>
-            <div class="col px-0 d-flex justify-content-end">
-                <a asp-action="Create" asp-controller="Book" class="btn btn-success">Create Book</a>
+
+    <div class="book-banner">         
+    </div>    
+    <div class=" container col-lg-8"> 
+        <div class="title-container">
+            <h3 class="page-title text-dark bg-dark text-white top-rounded my-0 px-3 p-1 d-flex"> 
+                List of Books
+            </h3>
+            <div class="mx-auto top-rounded"> 
+                <div class="px-0d-flex top-rounded ">
+                    <a asp-action="Create" asp-controller="Book" class="p-0 m-0 btn btn-secondary top-rounded"><h3 class="my-0 p-1">
+                    Create Book
+                    </h3></a>
+                </div>
             </div>
         </div>
+        <div class="pt-3">
+            
 
-        <div class="mx-auto d-flex flex-column gap-3">
+        <div class="mx-auto d-flex flex-md-row flex-column gap-3">
                 @foreach(var item in Model){
-                    <div class="d-flex flex-md-row flex-column">                      
+                    <div class="bg-transparent border-secondary card book-card">
+                        <div class="card-img-container">
+                            <img class="card-img-top" src="data:image/png;base64,@item.BookCoverBase64" alt="Cover of @item.Title" />
+                            <h3 class="book-title  mx-3 bg-dark top-rounded my-0 px-3 pt-2">
+                                <span class="m">
+                                    📖
+                                </span>
+                                <a asp-controller="Book" asp-route-id="@item.Id" asp-action="ViewBook" class="text-white w-100">
+                                    @item.Title
+                                </a>
+                            </h3>
+                        </div>
+                        <div class="card-body p-md-3 text-secondary">
+                            <div class="mb-2">
+                                <p class="card-text flex-grow-1 ">
+                                    <span class="fw-bold title-span">Author: </span>
+                                    @item.Author
+                                </p>
+                            </div>
+                            
+                            <p class="card-text flex-grow-1 ">
+                                <span class="fw-bold title-span mr-5">Genre: </span>
+                                @item.Genre
+                            </p>
+                            <p class="card-text flex-grow-1 ">
+                                <span class="fw-bold title-span">Date Published: </span>
+                                @item.DatePublished
+                            </p>
+                            <p class="card-text flex-grow-1 ">
+                                <span class="fw-bold title-span">ISBN: </span>
+                                @item.ISBN
+                            </p>
+                        </div>
+                    </div>
+                     
+                }
+            </div>
+        </div> 
+    </div>
+
+@* 
+
+    <div class="d-flex flex-md-row flex-column">                      
                         <img
                             class="rounded-start" 
                             src="data:image/png;base64,@item.BookCoverBase64"
@@ -69,8 +224,6 @@
                             </div>
                         </div>
                     </div>
-                     
-                }
-        </div>
-    </div>
+
+ *@
     

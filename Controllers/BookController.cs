@@ -66,64 +66,72 @@ public class BookController : Controller
     }
 
     // Helper Function to convert Base64 into IFormFile
-    public static IFormFile Base64ToFormFile(string base64String, string fileName)
+    // public static IFormFile Base64ToFormFile(string base64String, string fileName)
+    // {
+    //     byte[] bytes = Convert.FromBase64String(base64String);
+    //     MemoryStream stream = new MemoryStream(bytes);
+    //     IFormFile file = new FormFile(stream, 0, bytes.Length, fileName, fileName)
+    //     {
+    //         Headers = new HeaderDictionary(),
+    //         ContentType = "application/octet-stream"
+    //     };
+    //     return file;
+    // }
+    public async Task<IActionResult> Edit(int id)
     {
-        byte[] bytes = Convert.FromBase64String(base64String);
-        MemoryStream stream = new MemoryStream(bytes);
-        IFormFile file = new FormFile(stream, 0, bytes.Length, fileName, fileName)
-        {
-            Headers = new HeaderDictionary(),
-            ContentType = "application/octet-stream"
-        };
-        return file;
-    }
-    public IActionResult Edit(int id)
-    {
-
-        var books=_db.NewBooks.Find(id);
+        var books= await _db.NewBooks.FindAsync(id);
         if(books==null){
             return NotFound();
         } 
-
-        var formattedBook = new BookFormModel
-        {
-            Id = books.Id
-            Title = books.Title,
-            Author = books.Author,
-            Genre = books.Genre,
-            ISBN = books.ISBN,
-            DatePublished = books.DatePublished,
-            ImageFile = Base64ToFormFile(books.BookCoverBase64, "bookcover.png")
-        };
-        return View(formattedBook);
+ 
+        return View(books);
     }
     
     [HttpPost]
-    public async Task<IActionResult> EditBook(BookFormModel NewFormBook){
-        
-        string Base64Image;
-        // books DB has changed into NewBooks as to suppor the base64 database
-         using (var memoryStream = new MemoryStream())
-        {
-            await NewFormBook.ImageFile.CopyToAsync(memoryStream);
-            var fileBytes = memoryStream.ToArray();
-            Base64Image = Convert.ToBase64String(fileBytes);
-        }
+    public async Task<IActionResult> EditBook(NewBooksEntity NewFormBook){
+        var formattedBook = new NewBooksEntity{};
+ 
+        // string Base64Image;
+        // books DB has changed into NewBooks as to suppor thebase64 database
+        // using (var memoryStream = new MemoryStream())
+        // {
+        //     await NewFormBook.ImageFile.CopyToAsync(memoryStream);
+        //     var fileBytes = memoryStream.ToArray();
+        //     Base64Image = Convert.ToBase64String(fileBytes);
+        // }
 
-        // maps the book from the Forms to the DB NewBooksEntity format
-        var formattedBook = new NewBooksEntity {
+
+
+        // maps the book from the Forms to the DBNewBooksEntity format
+        formattedBook = new NewBooksEntity {
             Id = NewFormBook.Id,
             Title = NewFormBook.Title,
             Author = NewFormBook.Author,
             Genre = NewFormBook.Genre,
             ISBN = NewFormBook.ISBN,
             DatePublished = NewFormBook.DatePublished,
-            BookCoverBase64 = Base64Image
-        };
-        
+            BookCoverBase64 = NewFormBook.BookCoverBase64
+        };  
         _db.NewBooks.Update(formattedBook);
         _db.SaveChanges();
         return RedirectToAction("Index");
     }
- 
+
+    public async Task<IActionResult> ViewBook(int id){
+        
+        var book= await _db.NewBooks.FindAsync(id);
+        if (book==null){
+            return NotFound();
+        }
+        return View(book);   
+    }
+
+    public async Task<IActionResult> ViewBookImg(int id){
+        
+        var book= await _db.NewBooks.FindAsync(id);
+        if (book==null){
+            return NotFound();
+        }
+        return View(book);   
+    }
 }

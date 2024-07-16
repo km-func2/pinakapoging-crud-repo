@@ -1,0 +1,148 @@
+@model NewBooksEntity;
+
+<style>
+    .book-banner-container{
+        position: relative;
+        max-width: 1024px;
+        margin: auto;
+    }
+    .book-banner { 
+        height: 250px;
+        background-size: cover;
+        background-position: center;
+        background-image: url("https://images.unsplash.com/photo-1569878766010-17bff0a1987d?q=80&w=1365&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        object-fit: cover;
+    }
+    .book-cover{ 
+        transition: opacity ease .5s;
+        max-width: 450px;
+    } 
+        .book-cover:hover {
+            opacity: 0.8; /* Adjust the opacity value as needed */
+            mix-blend-mode:  ease multiply;
+        }
+        
+    .back-btn{
+        position: absolute;
+        margin-left: 10px;
+        margin-top: 10px;
+        z-index: 9999; 
+    }
+    .info-name-span{
+            width: 80px;
+            display: inline-block; 
+            margin-right: 2rem;
+        }
+    .title-container{
+        position: absolute;
+    }
+        .book-title{
+            min-width: 250px;
+            width: 300px;
+            position: absolute; 
+            bottom: -1px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            z-index: 9999;
+            box-shadow: 5px -10px 10px rgba(0, 0, 0, 0.205);
+        }
+        .top-rounded{
+            border-radius: 1rem 1rem 0rem 0rem;
+        } 
+
+    @@media only screen and (min-width: 1440px){
+        .book-cover{
+            margin-top: -7.5rem;
+        }
+        .content-container{
+            margin: auto;
+            min-width: 1024px;
+        };
+    }
+     @@media only screen and (min-width: 768px) and (max-width: 1439px){
+        .book-cover{ 
+            margin-top: -5rem; 
+            max-width: 300px;
+        } 
+    }
+    @@media only screen and (min-width: 425px) and (max-width: 767px){
+        .book-banner{ 
+            height: 150px
+        } 
+    }
+    @@media only screen and (max-width: 424px){
+        .book-title{
+            text-align: center;
+            width: 100%;
+            box-shadow:none;
+        }
+        .book-banner{
+            background-image: none;
+            height: 100px
+        }
+        .book-cover{  
+        max-width: 100%;
+    } 
+    }
+</style>
+
+<div>
+    @* Ask ben and glen how to nodal *@
+    @* Check Yammer Cybersec and GameDev and Art communities in ERNI *@
+    @* Prepare for Yammer intro and stuff like that to make a good first impression *@
+    <div class="book-banner">
+        <div class="col-lg-8 mx-auto d-flex align-items-bottom">
+            <a class="back-btn text-white rounded bg-dark py-2 px-3" asp-controller="Book" asp-action="Index">
+                back
+            </a>
+            
+        </div>  
+    </div>
+    <div class="container d-flex flex-column flex-md-row col-lg-8 mx-auto gap-5"> 
+        <div class="w-75 mx-auto">
+            <div class="title-container px-3 me-5">
+                <h3 class="book-title bg-dark text-white top-rounded my-0 px-5 p-1 d-flex"> 
+                    @Model.Title 
+                </h3>
+            </div>
+            <div class="p-md-3 py-3">
+                <div class="mb-2">
+                    <p class="card-text flex-grow-1 ">
+                        <span class="fw-bold info-name-span">Author: </span>
+                        @Model.Author
+                    </p>
+                </div>
+                
+                <p class="card-text flex-grow-1 ">
+                    <span class="fw-bold info-name-span mr-5">Genre: </span>
+                    @Model.Genre
+                </p>
+                <p class="card-text flex-grow-1 ">
+                    <span class="fw-bold info-name-span">Date Published: </span>
+                    @Model.DatePublished
+                </p>
+                <p class="card-text flex-grow-1 ">
+                    <span class="fw-bold info-name-span">ISBN: </span>
+                    @Model.ISBN
+                </p>
+            </div>
+            <div class="d-flex flex-row gap-2 justify-content-end">
+                <a asp-action="Edit" asp-controller="Book" asp-route-id="@Model.Id" class="btn btn-info">Edit</a>
+                <a asp-action="Delete" asp-controller="Book" asp-route-id="@Model.Id"  class="btn btn-danger">
+                    Delete
+                </a>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center ma-5">
+            @* Refactor into state management modal if time allows *@
+            <a asp-controller="Book" asp-action="ViewBookImg" asp-route-id="@Model.Id" target="_blank">
+                <img 
+                class="book-cover rounded"
+                src="data:image/png;base64,@Model.BookCoverBase64" alt="cover of the book @Model.Title"> 
+            </a>
+        </div>
+    </div>
+</div>
+ 
